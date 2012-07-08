@@ -28,7 +28,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Image Height="220" HorizontalAlignment="Left" Name="banner" Stretch="Uniform" VerticalAlignment="Top" Width="220" Source="/Glicious;component/images/logo.png" Margin="114,0,0,0" />
+            <Image Height="220" HorizontalAlignment="Left" Name="banner" Stretch="Uniform" VerticalAlignment="Top" Width="220" Source="/Glicious;component/images/glicious5.png" Margin="114,0,0,0" />
             <toolkit:DatePicker x:Name="datePicker" Margin="12,240,0,325" Background="White" FlowDirection="LeftToRight" FontSize="24" FontStyle="Normal" FontFamily="Tahoma" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Width="436" ValueStringFormat="{}{0:D}" BorderBrush="Black" />
             <Button Background="Black" Content="Breakfast" Height="75" HorizontalAlignment="Left" Margin="12,318,0,0" Name="bfastButton" VerticalAlignment="Top" Width="438" Click="bfastButton_Click" />
             <Button Background="Black" Content="Lunch" Height="75" HorizontalAlignment="Left" Margin="12,399,0,0" Name="lunchButton" VerticalAlignment="Top" Width="438" Click="lunchButton_Click" />

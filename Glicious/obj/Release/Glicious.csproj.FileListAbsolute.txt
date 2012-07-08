@@ -24,6 +24,5 @@ C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Relea
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Newtonsoft.Json.xml
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\NutritionPage.g.i.cs
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\SettingsPage.g.i.cs
-C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\logo.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Background.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\ApplicationIcon.png

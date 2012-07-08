@@ -125,7 +125,7 @@ namespace Glicious
                 {
                     daysAvailableTXT = reader.ReadToEnd();
                     DateTime newTime = (DateTime)datePicker.Value;
-                    if (daysAvailableTXT.Equals("0"))
+                    if (daysAvailableTXT.Equals("-1"))
                     {
                         datePicker.Value = DateTime.Today;
                         hideAllButtons();
@@ -133,26 +133,34 @@ namespace Glicious
                     }
                     else
                     {
-                        if (newTime.DayOfYear < DateTime.Today.DayOfYear)
+                        String s;
+                        if (newTime.Year != DateTime.Today.Year)
                         {
-                            newTime = DateTime.Today;
-                            datePicker.Value = newTime;
-                            checkButtons(newTime);
-                        }
-                        else if ((DateTime.Today.DayOfYear + Int32.Parse(daysAvailableTXT)) <= newTime.DayOfYear)
-                        {
-                            hideAllButtons();
-                            String s;
-                            if (daysAvailableTXT.Equals("1"))
-                                s = "No menus are available for the selected date.\nToday's menu is the only available menu.";
-                            else if (daysAvailableTXT.Equals("2"))
-                                s = "No menus are available for the selected date.\nThere is only 1 day after today available.";
-                            else
-                                s = System.String.Format("No menus are available for the selected date.\nThere are only {0} days after today available.", daysAvailableTXT);
+                            s = System.String.Format("No menus are available for the selected date.\nThere are only {0} days after today available.", daysAvailableTXT);
                             textBlock1.Text = s;
                         }
                         else
-                            checkButtons(newTime);
+                        {
+                            if (newTime.DayOfYear < DateTime.Today.DayOfYear)
+                            {
+                                newTime = DateTime.Today;
+                                datePicker.Value = newTime;
+                                checkButtons(newTime);
+                            }
+                            else if ((DateTime.Today.DayOfYear + Int32.Parse(daysAvailableTXT)) < newTime.DayOfYear)
+                            {
+                                hideAllButtons();
+                                if (daysAvailableTXT.Equals("0"))
+                                    s = "No menus are available for the selected date.\nToday's menu is the only available menu.";
+                                else if (daysAvailableTXT.Equals("1"))
+                                    s = "No menus are available for the selected date.\nThere is only 1 day after today available.";
+                                else
+                                    s = System.String.Format("No menus are available for the selected date.\nThere are only {0} days after today available.", daysAvailableTXT);
+                                textBlock1.Text = s;
+                            }
+                            else
+                                checkButtons(newTime);
+                        }
                     }
                 }
             }
