@@ -17,8 +17,6 @@ namespace Glicious
 {
     public partial class MainPage : PhoneApplicationPage
     {
-
-        private string daysAvailableTXT;
         // Constructor
         public MainPage()
         {
@@ -105,7 +103,8 @@ namespace Glicious
             try
             {
                 var webClient = new WebClient();
-                webClient.OpenReadAsync(new Uri("http://tcdb.grinnell.edu/apps/glicious/available_days.php"));
+                webClient.OpenReadAsync(new Uri("http://tcdb.grinnell.edu/apps/glicious/last_date.json"));
+                //webClient.OpenReadAsync(new Uri("http://tcdb.grinnell.edu/apps/glicious/available_days.php"));
                 //webClient.OpenReadAsync(new Uri("http://www.cs.grinnell.edu/~tremblay/menu/available_days_FAKE.php"));
                 webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_OpenReadCompleted);
             }
@@ -123,9 +122,14 @@ namespace Glicious
             {
                 using (var reader = new StreamReader(e.Result))
                 {
-                    daysAvailableTXT = reader.ReadToEnd();
-                    DateTime newTime = (DateTime)datePicker.Value;
-                    if (daysAvailableTXT.Equals("-1"))
+                    String lastDateStr = reader.ReadToEnd();
+                    lastDateStr = lastDateStr.Replace("{\"Last_Day\":\"", "");
+                    lastDateStr = lastDateStr.Replace("\"}", "");
+                    lastDateStr = lastDateStr.Replace("-", "/");
+                    DateTime lastDate = DateTime.Parse(lastDateStr);
+                    DateTime selectedTime = (DateTime)datePicker.Value;
+
+                    if (DateTime.Compare(DateTime.Today, lastDate) > 0)
                     {
                         datePicker.Value = DateTime.Today;
                         hideAllButtons();
@@ -134,33 +138,19 @@ namespace Glicious
                     else
                     {
                         String s;
-                        if (newTime.Year != DateTime.Today.Year)
+                        if (DateTime.Compare(selectedTime, lastDate) > 0)
                         {
-                            s = System.String.Format("No menus are available for the selected date.\nThere are only {0} days after today available.", daysAvailableTXT);
+                            hideAllButtons();
+                            s = System.String.Format("No menus are available for the selected date.\n{0} is the \nlast date available.", lastDate.ToLongDateString());
                             textBlock1.Text = s;
                         }
-                        else
+                        else if (DateTime.Compare(selectedTime, DateTime.Today) < 0)
                         {
-                            if (newTime.DayOfYear < DateTime.Today.DayOfYear)
-                            {
-                                newTime = DateTime.Today;
-                                datePicker.Value = newTime;
-                                checkButtons(newTime);
-                            }
-                            else if ((DateTime.Today.DayOfYear + Int32.Parse(daysAvailableTXT)) < newTime.DayOfYear)
-                            {
-                                hideAllButtons();
-                                if (daysAvailableTXT.Equals("0"))
-                                    s = "No menus are available for the selected date.\nToday's menu is the only available menu.";
-                                else if (daysAvailableTXT.Equals("1"))
-                                    s = "No menus are available for the selected date.\nThere is only 1 day after today available.";
-                                else
-                                    s = System.String.Format("No menus are available for the selected date.\nThere are only {0} days after today available.", daysAvailableTXT);
-                                textBlock1.Text = s;
-                            }
-                            else
-                                checkButtons(newTime);
+                            datePicker.Value = DateTime.Today;
+                            checkButtons(DateTime.Today);
                         }
+                        else
+                            checkButtons(selectedTime);
                     }
                 }
             }

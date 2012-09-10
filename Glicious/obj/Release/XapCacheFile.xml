@@ -1,25 +1,27 @@
-﻿<xapCache source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Glicious.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="7/8/2012 4:28:04 PM">
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="5/27/2012 1:29:22 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Background.png" archivePath="Background.png" lastWriteTime="6/14/2012 12:36:03 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\ApplicationIcon.png" archivePath="ApplicationIcon.png" lastWriteTime="6/14/2012 12:38:52 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.dll" archivePath="Glicious.dll" lastWriteTime="7/8/2012 4:28:03 PM" />
-  <file source="c:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.0\Libraries\Silverlight\Microsoft.Phone.Controls.dll" archivePath="Microsoft.Phone.Controls.dll" lastWriteTime="9/15/2011 3:34:20 PM" />
-  <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Toolkit\Oct11\Bin\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="10/6/2011 11:33:14 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Newtonsoft.Json.dll" archivePath="Newtonsoft.Json.dll" lastWriteTime="5/30/2012 2:55:39 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\fonts\vivaldi.ttf" archivePath="fonts\vivaldi.ttf" lastWriteTime="5/27/2012 2:51:22 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\change.png" archivePath="images\change.png" lastWriteTime="5/31/2012 4:42:16 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\close.png" archivePath="images\close.png" lastWriteTime="5/29/2012 9:07:14 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\save.png" archivePath="images\save.png" lastWriteTime="5/29/2012 9:05:37 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\settings.png" archivePath="images\settings.png" lastWriteTime="5/29/2012 9:05:39 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Newtonsoft.Json.dll" archivePath="Newtonsoft.Json.dll" lastWriteTime="5/30/2012 2:55:39 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Newtonsoft.Json.xml" archivePath="Newtonsoft.Json.xml" lastWriteTime="5/30/2012 2:55:39 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\SplashScreenImage.jpg" archivePath="SplashScreenImage.jpg" lastWriteTime="5/27/2012 3:03:37 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Toolkit.Content\ApplicationBar.Cancel.png" archivePath="Toolkit.Content\ApplicationBar.Cancel.png" lastWriteTime="5/27/2012 2:36:32 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Toolkit.Content\ApplicationBar.Check.png" archivePath="Toolkit.Content\ApplicationBar.Check.png" lastWriteTime="5/27/2012 2:36:32 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="5/31/2012 10:39:17 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\fonts\vivaldi.ttf" archivePath="fonts\vivaldi.ttf" lastWriteTime="5/27/2012 2:51:22 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\change.png" archivePath="images\change.png" lastWriteTime="5/31/2012 4:42:16 AM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\close.png" archivePath="images\close.png" lastWriteTime="5/29/2012 9:07:14 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\save.png" archivePath="images\save.png" lastWriteTime="5/29/2012 9:05:37 PM" />
-  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\settings.png" archivePath="images\settings.png" lastWriteTime="5/29/2012 9:05:39 PM" />
+﻿<xapCache source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Glicious.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="9/10/2012 10:31:02 AM">
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="5/27/2012 2:29:22 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Background.png" archivePath="Background.png" lastWriteTime="6/14/2012 1:36:03 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\ApplicationIcon.png" archivePath="ApplicationIcon.png" lastWriteTime="6/14/2012 1:38:52 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.dll" archivePath="Glicious.dll" lastWriteTime="9/10/2012 10:31:02 AM" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.0\Libraries\Silverlight\Microsoft.Phone.Controls.dll" archivePath="Microsoft.Phone.Controls.dll" lastWriteTime="9/15/2011 4:34:20 PM" />
+  <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Toolkit\Oct11\Bin\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="10/6/2011 12:33:14 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Newtonsoft.Json.dll" archivePath="Newtonsoft.Json.dll" lastWriteTime="5/30/2012 3:55:39 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\fonts\vivaldi.ttf" archivePath="fonts\vivaldi.ttf" lastWriteTime="5/27/2012 3:51:22 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\change.png" archivePath="images\change.png" lastWriteTime="5/31/2012 5:42:16 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\close.png" archivePath="images\close.png" lastWriteTime="5/29/2012 10:07:14 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\save.png" archivePath="images\save.png" lastWriteTime="5/29/2012 10:05:37 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\images\settings.png" archivePath="images\settings.png" lastWriteTime="5/29/2012 10:05:39 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Newtonsoft.Json.dll" archivePath="Newtonsoft.Json.dll" lastWriteTime="5/30/2012 3:55:39 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Newtonsoft.Json.xml" archivePath="Newtonsoft.Json.xml" lastWriteTime="5/30/2012 3:55:39 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\SplashScreenImage.jpg" archivePath="SplashScreenImage.jpg" lastWriteTime="5/27/2012 4:03:37 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Toolkit.Content\ApplicationBar.Cancel.png" archivePath="Toolkit.Content\ApplicationBar.Cancel.png" lastWriteTime="5/27/2012 3:36:32 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Toolkit.Content\ApplicationBar.Check.png" archivePath="Toolkit.Content\ApplicationBar.Check.png" lastWriteTime="5/27/2012 3:36:32 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="5/31/2012 11:39:17 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\fonts\vivaldi.ttf" archivePath="fonts\vivaldi.ttf" lastWriteTime="5/27/2012 3:51:22 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Background.png" archivePath="Background.png" lastWriteTime="6/14/2012 1:36:03 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\ApplicationIcon.png" archivePath="ApplicationIcon.png" lastWriteTime="6/14/2012 1:38:52 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\change.png" archivePath="images\change.png" lastWriteTime="5/31/2012 5:42:16 AM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\close.png" archivePath="images\close.png" lastWriteTime="5/29/2012 10:07:14 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\save.png" archivePath="images\save.png" lastWriteTime="5/29/2012 10:05:37 PM" />
+  <file source="C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\settings.png" archivePath="images\settings.png" lastWriteTime="5/29/2012 10:05:39 PM" />
 </xapCache>
