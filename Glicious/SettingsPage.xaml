@@ -33,10 +33,12 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <CheckBox Content="Vegan" Height="92" Margin="106,6,102,0" Name="veganBox" VerticalAlignment="Top" FlowDirection="LeftToRight" FontSize="40" DataContext="{Binding}" BorderBrush="Black" Background="White" />
-            <CheckBox Content="Ovolacto" FlowDirection="LeftToRight" FontSize="40" Height="92" HorizontalAlignment="Left" Margin="106,94,0,0" Name="ovolactoBox" VerticalAlignment="Top" Width="248" BorderBrush="Black" Background="White" />
-            <Image Height="206" Margin="125,273,125,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Source="/Glicious;component/images/glicious5.png" />
-            <TextBlock Height="75" HorizontalAlignment="Left" Margin="12,192,0,0" Name="textBlock1" Text="Grinnell Dining" VerticalAlignment="Top" Width="438" FontSize="56" TextAlignment="Center" FontFamily="fonts/vivaldi.ttf#Vivaldi"/>
+            <CheckBox Content="Vegan" Height="92" Margin="106,1,102,0" Name="veganBox" VerticalAlignment="Top" FlowDirection="LeftToRight" FontSize="40" DataContext="{Binding}" BorderBrush="Black" Background="White" />
+            <CheckBox Content="Ovolacto" FlowDirection="LeftToRight" FontSize="40" Height="92" HorizontalAlignment="Left" Margin="106,63,0,0" Name="ovolactoBox" VerticalAlignment="Top" Width="248" BorderBrush="Black" Background="White" />
+            <CheckBox Content="Gluten Free" Height="92" Margin="106,126,63,0" Name="gfBox" VerticalAlignment="Top" FlowDirection="LeftToRight" FontSize="40" DataContext="{Binding}" BorderBrush="Black" Background="White" />
+            <CheckBox Content="Passover" FlowDirection="LeftToRight" FontSize="40" Height="92" HorizontalAlignment="Left" Margin="106,189,0,0" Name="passoverBox" VerticalAlignment="Top" Width="248" BorderBrush="Black" Background="White" />
+            <Image Height="206" Margin="125,350,125,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Source="/Glicious;component/images/glicious5.png" />
+            <TextBlock Height="75" HorizontalAlignment="Left" Margin="12,269,0,0" Name="textBlock1" Text="Grinnell Dining" VerticalAlignment="Top" Width="438" FontSize="56" TextAlignment="Center" FontFamily="fonts/vivaldi.ttf#Vivaldi"/>
         </Grid>
     </Grid>
 

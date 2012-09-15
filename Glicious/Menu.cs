@@ -30,7 +30,7 @@ namespace Glicious
             public Dish[] dishes { get; set; }
             public class Dish
             {
-                public Dish(String nm, bool hasN, bool ovo, bool veg, bool passO, bool hal, float[] nutr)
+                public Dish(String nm, bool hasN, bool ovo, bool veg, bool passO, bool hal, bool glutenF, float[] nutr)
                 {
                     name = nm;
                     hasNutrition = hasN;
@@ -38,9 +38,10 @@ namespace Glicious
                     vegan = veg;
                     passover = passO;
                     halal = hal;
+                    gf = glutenF;
                     nutrition = nutr;
                 }
-                public Dish(String nm, bool hasN, bool ovo, bool veg, bool passO, bool hal)
+                public Dish(String nm, bool hasN, bool ovo, bool veg, bool passO, bool hal, bool glutenF)
                 {
                     name = nm;
                     hasNutrition = hasN;
@@ -48,6 +49,7 @@ namespace Glicious
                     vegan = veg;
                     passover = passO;
                     halal = hal;
+                    gf = glutenF;
                 }
                 public String name { get; set; }
                 public bool hasNutrition { get; set; }
@@ -55,6 +57,7 @@ namespace Glicious
                 public bool vegan { get; set; }
                 public bool passover { get; set; }
                 public bool halal { get; set; }
+                public bool gf { get; set; }
                 public float[] nutrition { get; set; }
             }
         }

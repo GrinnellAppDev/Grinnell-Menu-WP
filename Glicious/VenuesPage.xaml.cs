@@ -90,7 +90,7 @@ namespace Glicious
             // ignore scenarios when we navigate back to this page and clear what was previously selected
             if (listBox.SelectedItem != null)
             {
-                Menu.Venue.Dish dummy = new Menu.Venue.Dish("", false, false, false, false, false);
+                Menu.Venue.Dish dummy = new Menu.Venue.Dish("", false, false, false, false, false, false);
                 Type type = listBox.SelectedItem.GetType();
                 Type type2 = dummy.GetType();
                 if (type.FullName.Equals(type2.FullName)) 
@@ -130,10 +130,11 @@ namespace Glicious
                 webClient.OpenReadAsync(new Uri(urlString));
                 webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_OpenReadCompleted);
             }
-            catch (Exception execpt)
+            catch (Exception except)
             {
                 textBlock1.Visibility = Visibility.Collapsed;
                 listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal", null));
+                Console.WriteLine("Web exception: {0}", except);
             }
         }
 
@@ -151,13 +152,14 @@ namespace Glicious
                     if (o[meal.Text.ToUpper()] != null && o[meal.Text.ToUpper()].HasValues)
                         foreach (JToken venue in o[meal.Text.ToUpper()].Children())
                         {
+                            //TODO allocate smarter
                             Menu.Venue.Dish[] tempDishes = new Menu.Venue.Dish[60];
                             String temp = venue.ToString().Substring(1, 40);
                             String venName = temp.Remove(temp.IndexOf("\""));
                             int j = 0;
                             foreach (JToken dish in venue.Children().Children())
                             {
-                                bool ovolacto, vegan, halal, passover, hasNutrition;
+                                bool ovolacto, vegan, halal, passover, hasNutrition, gf;
 
                                 String name = (String)dish["name"];
 
@@ -184,12 +186,17 @@ namespace Glicious
                                     halal = true;
                                 else
                                     halal = false;
+                                String glutenF = (String)dish["gluten_free"];
+                                if (glutenF.Equals("true"))
+                                    gf = true;
+                                else
+                                    gf = false;
 
                                 Newtonsoft.Json.Linq.JValue dummy = new Newtonsoft.Json.Linq.JValue(false);
                                 if (dummy.GetType().FullName.Equals(dish["nutrition"].GetType().FullName))
                                 {
                                     hasNutrition = false;
-                                    tempDishes[j++] = new Menu.Venue.Dish(name, hasNutrition, ovolacto, vegan, passover, halal);
+                                    tempDishes[j++] = new Menu.Venue.Dish(name, hasNutrition, ovolacto, vegan, passover, halal, gf);
                                 }
                                 else
                                 {
@@ -198,18 +205,76 @@ namespace Glicious
                                     int k = 0;
                                     foreach (JToken child in dish["nutrition"])
                                         nutrition[k++] = (float)child;
-                                    tempDishes[j++] = new Menu.Venue.Dish(name, hasNutrition, ovolacto, vegan, passover, halal, nutrition);
+                                    tempDishes[j++] = new Menu.Venue.Dish(name, hasNutrition, ovolacto, vegan, passover, halal, gf, nutrition);
                                 }
 
                             }
-                            tempVens[i++] = new Menu.Venue(venName, tempDishes); ;
+                            tempVens[i++] = new Menu.Venue(venName, tempDishes);
                         }
                     else
                         listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal", null));
                     menu = new Menu(tempVens);
                 }
                 textBlock1.Visibility = Visibility.Collapsed;
-                if ((App.Current as App).ovoFilter)
+
+                if ((App.Current as App).ovoFilter && (App.Current as App).gfFilter)
+                {
+                    foreach (Menu.Venue ven in menu.venues)
+                        if (ven != null)
+                        {
+                            bool added = false;
+                            listBox.Items.Add(ven);
+                            foreach (Menu.Venue.Dish dish in ven.dishes)
+                                if (dish != null && (dish.ovolacto || dish.vegan) && dish.gf)
+                                {
+                                    listBox.Items.Add(dish);
+                                    added = true;
+                                }
+                            if (!added)
+                                listBox.Items.Remove(ven);
+                            else
+                                listBox.Items.Add(new Menu.Venue("\t", null));
+                        }
+                }
+                else if ((App.Current as App).veganFilter && (App.Current as App).gfFilter)
+                {
+                    foreach (Menu.Venue ven in menu.venues)
+                        if (ven != null)
+                        {
+                            bool added = false;
+                            listBox.Items.Add(ven);
+                            foreach (Menu.Venue.Dish dish in ven.dishes)
+                                if (dish != null && dish.vegan && dish.gf)
+                                {
+                                    listBox.Items.Add(dish);
+                                    added = true;
+                                }
+                            if (!added)
+                                listBox.Items.Remove(ven);
+                            else
+                                listBox.Items.Add(new Menu.Venue("\t", null));
+                        }
+                }
+                else if ((App.Current as App).gfFilter)
+                {
+                    foreach (Menu.Venue ven in menu.venues)
+                        if (ven != null)
+                        {
+                            bool added = false;
+                            listBox.Items.Add(ven);
+                            foreach (Menu.Venue.Dish dish in ven.dishes)
+                                if (dish != null && dish.gf)
+                                {
+                                    listBox.Items.Add(dish);
+                                    added = true;
+                                }
+                            if (!added)
+                                listBox.Items.Remove(ven);
+                            else
+                                listBox.Items.Add(new Menu.Venue("\t", null));
+                        }
+                }
+                else if ((App.Current as App).ovoFilter)
                 {
                     foreach (Menu.Venue ven in menu.venues)
                         if (ven != null)
@@ -258,10 +323,11 @@ namespace Glicious
                             listBox.Items.Add(new Menu.Venue("\t", null));
                         }
             }
-            catch (Exception execpt)
+            catch (Exception except)
             {
                 textBlock1.Visibility = Visibility.Collapsed;
                 listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal", null));
+                Console.WriteLine("Parsing exception: {0}", except);
             }
         }
 

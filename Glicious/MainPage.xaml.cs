@@ -113,6 +113,7 @@ namespace Glicious
                 datePicker.Value = DateTime.Today;
                 hideAllButtons();
                 textBlock1.Text = "No menus are currently available.\nPlease check your network connection.";
+                Console.WriteLine("Web exception: {0}", except);
             }
         }
 
@@ -159,6 +160,7 @@ namespace Glicious
                 datePicker.Value = DateTime.Today;
                 hideAllButtons();
                 textBlock1.Text = "No menus are currently available.\nPlease check your network connection.";
+                Console.WriteLine("Parsing exception: {0}", except);
             }
         }
  

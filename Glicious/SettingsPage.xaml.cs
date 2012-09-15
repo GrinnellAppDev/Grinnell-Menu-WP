@@ -53,7 +53,9 @@ namespace Glicious
             cancel.Click += new EventHandler(cancel_Click);
 
             ovolactoBox.IsChecked = (App.Current as App).ovoFilter;
-            veganBox.IsChecked = (App.Current as App).veganFilter;
+            veganBox.IsChecked = (App.Current as App).veganFilter; 
+            gfBox.IsChecked = (App.Current as App).gfFilter;
+            passoverBox.Visibility = Visibility.Collapsed;
         }
         public bool IsLightTheme
         {
@@ -68,10 +70,14 @@ namespace Glicious
                 appsettings.Remove("ovolacto"); 
             if (appsettings.Contains("vegan"))
                 appsettings.Remove("vegan");
+            if (appsettings.Contains("gf"))
+                appsettings.Remove("gf");
             appsettings.Add("ovolacto", ovolactoBox.IsChecked);
             appsettings.Add("vegan", veganBox.IsChecked);
+            appsettings.Add("gf", gfBox.IsChecked);
             (App.Current as App).ovoFilter = (bool)ovolactoBox.IsChecked;
             (App.Current as App).veganFilter = (bool)veganBox.IsChecked;
+            (App.Current as App).gfFilter = (bool)gfBox.IsChecked;
             appsettings.Save();
             NavigationService.GoBack();
         }
