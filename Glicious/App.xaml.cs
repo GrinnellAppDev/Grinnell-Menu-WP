@@ -24,6 +24,7 @@ namespace Glicious
         public bool ovoFilter { get; set; }
         public bool gfFilter { get; set; }
         public bool passoverFilter { get; set; }
+        public bool passover { get; set; }
         public bool inverted { get; set; }
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.

@@ -30,6 +30,8 @@ namespace Glicious
                 textBlock1.Foreground = new SolidColorBrush(Colors.Black);
                 veganBox.Foreground = new SolidColorBrush(Colors.Black);
                 ovolactoBox.Foreground = new SolidColorBrush(Colors.Black);
+                gfBox.Foreground = new SolidColorBrush(Colors.Black);
+                passoverBox.Foreground = new SolidColorBrush(Colors.Black);
             }
             else
             {
@@ -39,6 +41,8 @@ namespace Glicious
                 textBlock1.Foreground = new SolidColorBrush(Colors.White);
                 veganBox.Foreground = new SolidColorBrush(Colors.White);
                 ovolactoBox.Foreground = new SolidColorBrush(Colors.White);
+                gfBox.Foreground = new SolidColorBrush(Colors.White);
+                passoverBox.Foreground = new SolidColorBrush(Colors.White);
             }
             ApplicationBar = new ApplicationBar();
             ApplicationBarIconButton save = new ApplicationBarIconButton();
@@ -55,7 +59,13 @@ namespace Glicious
             ovolactoBox.IsChecked = (App.Current as App).ovoFilter;
             veganBox.IsChecked = (App.Current as App).veganFilter; 
             gfBox.IsChecked = (App.Current as App).gfFilter;
-            passoverBox.Visibility = Visibility.Collapsed;
+            if ((App.Current as App).passover)
+            {
+                passoverBox.Visibility = Visibility.Visible;
+                passoverBox.IsChecked = (App.Current as App).passoverFilter;
+            }
+            else
+                passoverBox.Visibility = Visibility.Collapsed;
         }
         public bool IsLightTheme
         {
@@ -72,12 +82,16 @@ namespace Glicious
                 appsettings.Remove("vegan");
             if (appsettings.Contains("gf"))
                 appsettings.Remove("gf");
+            if (appsettings.Contains("passover"))
+                appsettings.Remove("passover");
             appsettings.Add("ovolacto", ovolactoBox.IsChecked);
             appsettings.Add("vegan", veganBox.IsChecked);
             appsettings.Add("gf", gfBox.IsChecked);
+            appsettings.Add("passover", passoverBox.IsChecked);
             (App.Current as App).ovoFilter = (bool)ovolactoBox.IsChecked;
             (App.Current as App).veganFilter = (bool)veganBox.IsChecked;
             (App.Current as App).gfFilter = (bool)gfBox.IsChecked;
+            (App.Current as App).passoverFilter = (bool)passoverBox.IsChecked;
             appsettings.Save();
             NavigationService.GoBack();
         }

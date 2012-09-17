@@ -148,6 +148,13 @@ namespace Glicious
                     JObject o = JObject.Parse(json);
                     Menu.Venue[] tempVens = new Menu.Venue[30];
                     int i = 0;
+                    
+                    String pass = (String)o["PASSOVER"];
+                    if (pass.Equals("true"))
+                        (App.Current as App).passover = true;
+                    else
+                        (App.Current as App).passover = false;
+
 
                     if (o[meal.Text.ToUpper()] != null && o[meal.Text.ToUpper()].HasValues)
                         foreach (JToken venue in o[meal.Text.ToUpper()].Children())
@@ -175,9 +182,14 @@ namespace Glicious
                                 else
                                     vegan = false;
 
-                                String passO = (String)dish["passover"];
-                                if (passO.Equals("true"))
-                                    passover = true;
+                                if ((App.Current as App).passover)
+                                {
+                                    String passO = (String)dish["passover"];
+                                    if (passO.Equals("true"))
+                                        passover = true;
+                                    else
+                                        passover = false;
+                                }
                                 else
                                     passover = false;
 
@@ -186,6 +198,7 @@ namespace Glicious
                                     halal = true;
                                 else
                                     halal = false;
+
                                 String glutenF = (String)dish["gluten_free"];
                                 if (glutenF.Equals("true"))
                                     gf = true;
@@ -217,111 +230,74 @@ namespace Glicious
                 }
                 textBlock1.Visibility = Visibility.Collapsed;
 
-                if ((App.Current as App).ovoFilter && (App.Current as App).gfFilter)
-                {
-                    foreach (Menu.Venue ven in menu.venues)
-                        if (ven != null)
+                
+            bool pFlag, oFlag, vFlag, gfFlag, compositeBool;
+            if ((App.Current as App).passover && (App.Current as App).passoverFilter)
+                pFlag = true;
+            else
+                pFlag = false;
+            if ((App.Current as App).ovoFilter)
+                oFlag = true;
+            else
+                oFlag = false;
+            if ((App.Current as App).veganFilter)
+                vFlag = true;
+            else
+                vFlag = false;
+            if ((App.Current as App).gfFilter)
+                gfFlag = true;
+            else
+                gfFlag = false;
+
+                foreach (Menu.Venue ven in menu.venues)
+                    if (ven != null)
+                    {
+                        bool added = false;
+                        listBox.Items.Add(ven);
+                        foreach (Menu.Venue.Dish dish in ven.dishes)
                         {
-                            bool added = false;
-                            listBox.Items.Add(ven);
-                            foreach (Menu.Venue.Dish dish in ven.dishes)
-                                if (dish != null && (dish.ovolacto || dish.vegan) && dish.gf)
+                            if (dish != null)
+                            {
+                                if (pFlag)
+                                    if (gfFlag && oFlag)
+                                        compositeBool = (dish.passover && (dish.vegan || dish.ovolacto) && dish.gf);
+                                    else if (gfFlag && vFlag)
+                                        compositeBool = (dish.passover && dish.vegan && dish.gf);
+                                    else if (oFlag)
+                                        compositeBool = (dish.passover && (dish.vegan || dish.ovolacto));
+                                    else if (vFlag)
+                                        compositeBool = (dish.passover && dish.vegan);
+                                    else if (gfFlag)
+                                        compositeBool = (dish.passover && dish.gf);
+                                    else
+                                        compositeBool = dish.passover;
+                                else
+                                    if (gfFlag && oFlag)
+                                        compositeBool = ((dish.vegan || dish.ovolacto) && dish.gf);
+                                    else if (gfFlag && vFlag)
+                                        compositeBool = (dish.vegan && dish.gf);
+                                    else if (oFlag)
+                                        compositeBool = (dish.vegan || dish.ovolacto);
+                                    else if (vFlag)
+                                        compositeBool = dish.vegan;
+                                    else if (gfFlag)
+                                        compositeBool = dish.gf;
+                                    else
+                                        compositeBool = true;
+
+                                if (compositeBool)
                                 {
                                     listBox.Items.Add(dish);
                                     added = true;
                                 }
-                            if (!added)
-                                listBox.Items.Remove(ven);
-                            else
-                                listBox.Items.Add(new Menu.Venue("\t", null));
+                            }
                         }
-                }
-                else if ((App.Current as App).veganFilter && (App.Current as App).gfFilter)
-                {
-                    foreach (Menu.Venue ven in menu.venues)
-                        if (ven != null)
-                        {
-                            bool added = false;
-                            listBox.Items.Add(ven);
-                            foreach (Menu.Venue.Dish dish in ven.dishes)
-                                if (dish != null && dish.vegan && dish.gf)
-                                {
-                                    listBox.Items.Add(dish);
-                                    added = true;
-                                }
-                            if (!added)
-                                listBox.Items.Remove(ven);
-                            else
-                                listBox.Items.Add(new Menu.Venue("\t", null));
-                        }
-                }
-                else if ((App.Current as App).gfFilter)
-                {
-                    foreach (Menu.Venue ven in menu.venues)
-                        if (ven != null)
-                        {
-                            bool added = false;
-                            listBox.Items.Add(ven);
-                            foreach (Menu.Venue.Dish dish in ven.dishes)
-                                if (dish != null && dish.gf)
-                                {
-                                    listBox.Items.Add(dish);
-                                    added = true;
-                                }
-                            if (!added)
-                                listBox.Items.Remove(ven);
-                            else
-                                listBox.Items.Add(new Menu.Venue("\t", null));
-                        }
-                }
-                else if ((App.Current as App).ovoFilter)
-                {
-                    foreach (Menu.Venue ven in menu.venues)
-                        if (ven != null)
-                        {
-                            bool added = false;
-                            listBox.Items.Add(ven);
-                            foreach (Menu.Venue.Dish dish in ven.dishes)
-                                if (dish != null && (dish.ovolacto || dish.vegan))
-                                {
-                                    listBox.Items.Add(dish);
-                                    added = true;
-                                }
-                            if (!added)
-                                listBox.Items.Remove(ven);
-                            else
-                                listBox.Items.Add(new Menu.Venue("\t", null));
-                        }
-                }
-                else if ((App.Current as App).veganFilter)
-                {
-                    foreach (Menu.Venue ven in menu.venues)
-                        if (ven != null)
-                        {
-                            bool added = false;
-                            listBox.Items.Add(ven);
-                            foreach (Menu.Venue.Dish dish in ven.dishes)
-                                if (dish != null && (dish.vegan))
-                                {
-                                    listBox.Items.Add(dish);
-                                    added = true;
-                                }
-                            if (!added)
-                                listBox.Items.Remove(ven);
-                            else
-                                listBox.Items.Add(new Menu.Venue("\t", null));
-                        }
-                }
-                else
-                    foreach (Menu.Venue ven in menu.venues)
-                        if (ven != null)
-                        {
-                            listBox.Items.Add(ven);
-                            foreach (Menu.Venue.Dish dish in ven.dishes)
-                                if (dish != null)
-                                    listBox.Items.Add(dish);
+                        if (!added)
+                            listBox.Items.Remove(ven);
+                        else
                             listBox.Items.Add(new Menu.Venue("\t", null));
-                        }
+                    }
+                   
             }
             catch (Exception except)
             {
@@ -330,6 +306,11 @@ namespace Glicious
                 Console.WriteLine("Parsing exception: {0}", except);
             }
         }
+
+        void filter()
+        {
+        }
+
 
         void settings_Click(object sender, EventArgs e)
         {
