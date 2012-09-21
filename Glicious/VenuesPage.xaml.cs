@@ -22,8 +22,7 @@ namespace Glicious
     {
         IsolatedStorageSettings appsettings = IsolatedStorageSettings.ApplicationSettings;
         public Menu menu;
-        private DatePicker dPicker; 
-        Popup mealChange = new Popup();
+        private DatePicker dPicker;
        
         public VenuesPage()
         {
@@ -37,27 +36,21 @@ namespace Glicious
                 meal.Foreground = new SolidColorBrush(Colors.Black);
                 date.Foreground = new SolidColorBrush(Colors.Black);
             }
-
-            mealChange.IsOpen = false;
-            textBlock1.Visibility = Visibility.Visible;
-            textBlock1.Text = "Loading menu, please wait.";
             ApplicationBar = new ApplicationBar();
             ApplicationBarIconButton settings = new ApplicationBarIconButton();
-            settings.IconUri = new Uri("/Images/settings.png", UriKind.Relative);
+            settings.IconUri = new Uri("/Images/appbar.feature.settings.rest.png", UriKind.Relative);
             settings.Text = "Settings";
             settings.Click += new EventHandler(settings_Click);
-            ApplicationBarIconButton changeMeal = new ApplicationBarIconButton();
-            changeMeal.IconUri = new Uri("/Images/change.png", UriKind.Relative);
-            changeMeal.Text = "Meal";
-            changeMeal.Click += new EventHandler(changeMeal_Click);
             ApplicationBarIconButton pickDate = new ApplicationBarIconButton();
             pickDate.IconUri = new Uri("/Images/calendar.png", UriKind.Relative);
             pickDate.Text = "Date";
             pickDate.Click += new EventHandler(pickDate_Click);
             ApplicationBar.Buttons.Add(pickDate);
-            ApplicationBar.Buttons.Add(changeMeal);
             ApplicationBar.Buttons.Add(settings);
-            
+
+            textBlock1.Visibility = Visibility.Visible;
+            textBlock1.Text = "Loading menu, please wait.";
+
             if ((App.Current as App).datePick == null)
             {
                 datePicker.Value = DateTime.Now;
@@ -83,14 +76,36 @@ namespace Glicious
             dPicker.ValueStringFormat = "{0:D}";
             date.Text = dPicker.ValueString;
             meal.Text = (App.Current as App).mealString;
+            
+            DateTime dTime = (DateTime)dPicker.Value;
+            if (dTime.DayOfWeek != DayOfWeek.Sunday)
+            {
+                ApplicationBarMenuItem bfastBar = new ApplicationBarMenuItem("Breakfast");
+                bfastBar.Click += new EventHandler(bFast_Click);
+                ApplicationBar.MenuItems.Add(bfastBar);
+            }
+            ApplicationBarMenuItem lunchBar = new ApplicationBarMenuItem("Lunch");
+            ApplicationBarMenuItem dinnerBar = new ApplicationBarMenuItem("Dinner");
+            lunchBar.Click += new EventHandler(lunch_Click);
+            dinnerBar.Click += new EventHandler(dinner_Click);
+            ApplicationBar.MenuItems.Add(lunchBar);
+            ApplicationBar.MenuItems.Add(dinnerBar);
+            if (dTime.DayOfWeek != DayOfWeek.Sunday && dTime.DayOfWeek != DayOfWeek.Saturday)
+            {
+                ApplicationBarMenuItem outtakesBar = new ApplicationBarMenuItem("Outtakes");
+                outtakesBar.Click += new EventHandler(outtakes_Click);
+                ApplicationBar.MenuItems.Add(outtakesBar);
+            }
 
             if (appsettings.Contains("vegan"))
             {
                 (App.Current as App).ovoFilter = (bool)appsettings["ovolacto"];
                 (App.Current as App).veganFilter = (bool)appsettings["vegan"];
+                (App.Current as App).passoverFilter = (bool)appsettings["passover"];
+                (App.Current as App).gfFilter = (bool)appsettings["gf"];
             }
-
         }
+
         public bool IsLightTheme
         {
             get
@@ -99,6 +114,7 @@ namespace Glicious
                     == Visibility.Visible;
             }
         }
+
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // ignore scenarios when we navigate back to this page and clear what was previously selected
@@ -124,7 +140,6 @@ namespace Glicious
         {
             loadData();
         }
-
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -168,7 +183,6 @@ namespace Glicious
                         (App.Current as App).passover = true;
                     else
                         (App.Current as App).passover = false;
-
 
                     if (o[meal.Text.ToUpper()] != null && o[meal.Text.ToUpper()].HasValues)
                         foreach (JToken venue in o[meal.Text.ToUpper()].Children())
@@ -234,7 +248,6 @@ namespace Glicious
                                         nutrition[k++] = (float)child;
                                     tempDishes[j++] = new Menu.Venue.Dish(name, hasNutrition, ovolacto, vegan, passover, halal, gf, nutrition);
                                 }
-
                             }
                             tempVens[i++] = new Menu.Venue(venName, tempDishes);
                         }
@@ -243,7 +256,6 @@ namespace Glicious
                     menu = new Menu(tempVens);
                 }
                 textBlock1.Visibility = Visibility.Collapsed;
-
                 
             bool pFlag, oFlag, vFlag, gfFlag, compositeBool;
             if ((App.Current as App).passover && (App.Current as App).passoverFilter)
@@ -311,7 +323,6 @@ namespace Glicious
                         else
                             listBox.Items.Add(new Menu.Venue("\t", null));
                     }
-                   
             }
             catch (Exception except)
             {
@@ -321,29 +332,12 @@ namespace Glicious
             }
         }
 
-        void filter()
-        {
-        }
-
-
         void settings_Click(object sender, EventArgs e)
         {
              NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
         }
 
-        void popupEnd()
-        {
-            meal.Opacity = PgTitle.Opacity = date.Opacity = .9;
-            listBox.Opacity = 1;
-            mealChange.IsOpen = false;
-        }
-
-        void popupCancel_Click(object sender, EventArgs e)
-        {
-            popupEnd();   
-        }
-
-        void popupBFast_Click(object sender, EventArgs e)
+        void bFast_Click(object sender, EventArgs e)
         {
             if (!(App.Current as App).mealString.Equals("Breakfast"))
             {
@@ -351,10 +345,9 @@ namespace Glicious
                 (App.Current as App).mealString = "Breakfast"; 
                 loadData();
             }
-            popupEnd(); 
         }
 
-        void popupLunch_Click(object sender, EventArgs e)
+        void lunch_Click(object sender, EventArgs e)
         {
             if (!(App.Current as App).mealString.Equals("Lunch"))
             {
@@ -362,10 +355,9 @@ namespace Glicious
                 (App.Current as App).mealString = "Lunch"; 
                 loadData();
             }
-            popupEnd(); 
         }
 
-        void popupDinner_Click(object sender, EventArgs e)
+        void dinner_Click(object sender, EventArgs e)
         {
             if (!(App.Current as App).mealString.Equals("Dinner"))
             {
@@ -373,10 +365,9 @@ namespace Glicious
                 (App.Current as App).mealString = "Dinner"; 
                 loadData();
             }
-            popupEnd(); 
         }
 
-        void popupOuttakes_Click(object sender, EventArgs e)
+        void outtakes_Click(object sender, EventArgs e)
         {
             if (!(App.Current as App).mealString.Equals("Outtakes"))
             {
@@ -384,82 +375,11 @@ namespace Glicious
                 (App.Current as App).mealString = "Outtakes";
                 loadData();
             }
-            popupEnd(); 
         }
 
         void pickDate_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-        }
-
-        void changeMeal_Click(object sender, EventArgs e)
-        {
-            Border border = new Border();
-            border.BorderBrush = new SolidColorBrush(Colors.White);
-            border.BorderThickness = new Thickness(2.0);
-
-            StackPanel panel1 = new StackPanel();
-            panel1.Background = new SolidColorBrush(Colors.Gray);
-            Button cancel = new Button();
-            cancel.Content = "Cancel";
-            cancel.Margin = new Thickness(0);
-            cancel.Click += new RoutedEventHandler(popupCancel_Click);
-            Button bFast = new Button();
-            bFast.Content = "Breakfast";
-            bFast.Margin = new Thickness(0);
-            bFast.Click += new RoutedEventHandler(popupBFast_Click);
-            Button lunch = new Button();
-            lunch.Content = "Lunch";
-            lunch.Margin = new Thickness(0);
-            lunch.Click += new RoutedEventHandler(popupLunch_Click);
-            Button dinner = new Button();
-            dinner.Content = "Dinner";
-            dinner.Margin = new Thickness(0);
-            dinner.Click += new RoutedEventHandler(popupDinner_Click);
-            Button outtakes = new Button();
-            outtakes.Content = "Outtakes";
-            outtakes.Margin = new Thickness(0);
-            outtakes.Click += new RoutedEventHandler(popupOuttakes_Click);
-            TextBlock textblock1 = new TextBlock();
-            textblock1.Text = " Select meal:";
-            textblock1.FontSize = 24;
-            textblock1.Margin = new Thickness(10.0);
-            panel1.Children.Add(textblock1);
-            DateTime dTime = (DateTime)dPicker.Value;
-            if ((dTime.DayOfWeek == DayOfWeek.Saturday) || (dTime.DayOfWeek == DayOfWeek.Sunday))
-                if (dTime.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    panel1.Children.Add(lunch);
-                    panel1.Children.Add(dinner);
-                    panel1.Children.Add(cancel);
-                }
-                else
-                {
-                    panel1.Children.Add(bFast);
-                    panel1.Children.Add(lunch);
-                    panel1.Children.Add(dinner);
-                    panel1.Children.Add(cancel);
-                }
-            else
-            {
-                panel1.Children.Add(bFast);
-                panel1.Children.Add(lunch);
-                panel1.Children.Add(dinner);
-                panel1.Children.Add(outtakes);
-                panel1.Children.Add(cancel);
-            }
-            border.Child = panel1;
-            // Set the Child property of Popup to the border 
-            // which contains a stackpanel, textblock and button.
-            mealChange.Child = border;
-
-            // Set where the popup will show up on the screen.
-            mealChange.VerticalOffset = 200;
-            mealChange.HorizontalOffset = 150;
-            meal.Opacity = PgTitle.Opacity = date.Opacity = .75;
-            listBox.Opacity = .25;
-            // Open the popup.
-            mealChange.IsOpen = true;
         }
     }
 }

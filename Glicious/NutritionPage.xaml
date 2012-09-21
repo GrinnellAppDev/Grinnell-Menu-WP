@@ -29,10 +29,14 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1">
             <Grid.Background>
-                <ImageBrush ImageSource="/Glicious;component/images/red_textured_background1.png" />
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF910000" Offset="0" />
+                    <GradientStop Color="Red" Offset="1" />
+                </LinearGradientBrush>
             </Grid.Background>
-            <TextBlock Height="562" HorizontalAlignment="Left" Margin="21,26,0,0" Name="nutrTxt" Text="" VerticalAlignment="Top" Width="428" Foreground="White" />
-            <TextBlock Height="562" HorizontalAlignment="Left" Margin="21,26,0,0" Name="nutrVals" Text="" VerticalAlignment="Top" Width="428" Foreground="White" FlowDirection="RightToLeft" />
+            <TextBlock Height="415" HorizontalAlignment="Left" Margin="20,25,0,0" Name="nutrTxt" Text="" VerticalAlignment="Top" Width="428" Foreground="White" />
+            <TextBlock Height="415" HorizontalAlignment="Left" Margin="20,25,0,0" Name="nutrVals" Text="" VerticalAlignment="Top" Width="428" Foreground="White" FlowDirection="RightToLeft" />
+            <Image Height="140" HorizontalAlignment="Center" Margin="0,445,0,0" Name="image1" Stretch="Uniform" VerticalAlignment="Top" Width="480" Source="/Glicious;component/images/glicious-banner7.png" />
         </Grid>
         <TextBlock FontSize="24" Height="43" HorizontalAlignment="Left" Margin="21,131,0,0" Name="dishName" Text="" VerticalAlignment="Top" Width="447" Grid.RowSpan="2" />
         <Grid.Background>

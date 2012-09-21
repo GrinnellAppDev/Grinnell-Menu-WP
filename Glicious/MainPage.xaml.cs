@@ -12,7 +12,6 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.IO;
 
-
 namespace Glicious
 {
     public partial class MainPage : PhoneApplicationPage
@@ -138,7 +137,6 @@ namespace Glicious
             hideAllButtons();
             textBlock1.Text = "";
         }
-
 
         private void buttonClick()
         {

@@ -15,10 +15,8 @@ C:\Users\Colin\Documents\Visual Studio 2010\Projects\Glicious\Glicious\Bin\Relea
 C:\Users\Colin\Documents\Visual Studio 2010\Projects\Glicious\Glicious\Bin\Release\Microsoft.Phone.Controls.xml
 C:\Users\Colin\Documents\Visual Studio 2010\Projects\Glicious\Glicious\Bin\Release\fonts\vivaldi.ttf
 C:\Users\Colin\Documents\Visual Studio 2010\Projects\Glicious\Glicious\obj\Release\VenuesPage.g.i.cs
-C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\change.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\close.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\save.png
-C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\settings.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Newtonsoft.Json.dll
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Newtonsoft.Json.xml
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\NutritionPage.g.i.cs
@@ -27,4 +25,6 @@ C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Relea
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\ApplicationIcon.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.csprojResolveAssemblyReference.cache
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\calendar.png
-C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\red_textured_background.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\appbar.feature.settings.rest.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\appbar.refresh.rest.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\calendar.dark.png

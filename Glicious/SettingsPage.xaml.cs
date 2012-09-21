@@ -31,18 +31,6 @@ namespace Glicious
                 textBlock1.Foreground = new SolidColorBrush(Colors.Black);
             }
 
-            ApplicationBar = new ApplicationBar();
-            ApplicationBarIconButton save = new ApplicationBarIconButton();
-            save.IconUri = new Uri("/Images/save.png", UriKind.Relative);
-            save.Text = "Save";
-            ApplicationBar.Buttons.Add(save);
-            save.Click += new EventHandler(save_Click);
-            ApplicationBarIconButton cancel = new ApplicationBarIconButton();
-            cancel.IconUri = new Uri("/Images/close.png", UriKind.Relative);
-            cancel.Text = "Cancel";
-            ApplicationBar.Buttons.Add(cancel);
-            cancel.Click += new EventHandler(cancel_Click);
-
             ovolactoBox.IsChecked = (App.Current as App).ovoFilter;
             veganBox.IsChecked = (App.Current as App).veganFilter; 
             gfBox.IsChecked = (App.Current as App).gfFilter;

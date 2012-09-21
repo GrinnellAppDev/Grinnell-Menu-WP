@@ -11,7 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
 <!--
     <phone:PhoneApplicationPage.Resources>
@@ -34,7 +34,10 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1">
             <Grid.Background>
-                <ImageBrush ImageSource="/Glicious;component/images/red_textured_background1.png" />
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF910000" Offset="0" />
+                    <GradientStop Color="Red" Offset="1" />
+                </LinearGradientBrush>
             </Grid.Background>
             <CheckBox Content="Vegan" FlowDirection="LeftToRight" FontSize="40" Height="92" HorizontalAlignment="Center" Margin="0,0,0,0" Name="veganBox" VerticalAlignment="Top" Width="275" BorderBrush="Black" Background="White" Foreground="White" />
             <CheckBox Content="Ovolacto" FlowDirection="LeftToRight" FontSize="40" Height="92" HorizontalAlignment="Center" Margin="0,60,0,0" Name="ovolactoBox" VerticalAlignment="Top" Width="275" BorderBrush="Black" Background="White" Foreground="White" />
@@ -50,5 +53,10 @@
             </LinearGradientBrush>
         </Grid.Background>
     </Grid>
-
+<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" x:Name="appBar">
+            <shell:ApplicationBarIconButton IconUri="/Images/save.png" Text="Save" x:Name="save" Click="save_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/close.png" Text="cancel" x:Name="settings" Click="cancel_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

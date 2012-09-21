@@ -36,7 +36,10 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1">
             <Grid.Background>
-                <ImageBrush ImageSource="/Glicious;component/images/red_textured_background1.png" x:Name="background" />
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF910000" Offset="0" />
+                    <GradientStop Color="Red" Offset="1" />
+                </LinearGradientBrush>
             </Grid.Background>
             <ListBox HorizontalAlignment="Left" Margin="25,6,0,0" Name="listBox" Width="445" FontSize="28" SelectionChanged="listBox_SelectionChanged" Foreground="White">
                 <ListBox.ItemTemplate>
@@ -50,5 +53,4 @@
         <TextBlock Height="43" HorizontalAlignment="Left" Margin="38,100,0,0" Name="meal" Text="" VerticalAlignment="Top" Grid.RowSpan="2" Width="146" FontSize="24" />
         <TextBlock Height="43" HorizontalAlignment="Left" Margin="190,100,0,0" Name="date" Text="" VerticalAlignment="Top" Width="266" Grid.RowSpan="2" TextAlignment="Right" />
     </Grid>
-
 </phone:PhoneApplicationPage>
