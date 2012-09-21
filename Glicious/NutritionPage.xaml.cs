@@ -23,27 +23,24 @@ namespace Glicious
             (App.Current as App).inverted = IsLightTheme;
             if ((App.Current as App).inverted)
             {
-                LayoutRoot.Background = new SolidColorBrush(Colors.White);
+                gradStart.Color = Colors.White;
+                gradStop.Color = Colors.Black;
                 Glicious.Foreground = new SolidColorBrush(Colors.Black);
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
                 dishName.Foreground = new SolidColorBrush(Colors.Black);
-                nutrTxt.Foreground = new SolidColorBrush(Colors.Black);
             }
-            else
-            {
-                LayoutRoot.Background = new SolidColorBrush(Colors.Black);
-                Glicious.Foreground = new SolidColorBrush(Colors.White);
-                PgTitle.Foreground = new SolidColorBrush(Colors.White);
-                dishName.Foreground = new SolidColorBrush(Colors.White);
-                nutrTxt.Foreground = new SolidColorBrush(Colors.White);
-            }
+            
             dish = (App.Current as App).nutrDish;
             dishName.Visibility = Visibility.Visible;
             dishName.Text = dish.name;
             if (dish.hasNutrition)
             {
-                String temp = System.String.Format("Calories {0}\nTotal Fat {1}g\n\tSaturated Fat {4}g\n\tTrans Fat {14}g\n\tPolyunsaturated Fat {5}g\n\tMonounsaturated Fat {6}g\nCholesterol {7}mg\nSodium {11}mg\nPotassium {15}g\nTotal Carbohydrate {2}g\n\tDietary Fiber {8}g\n\tSugars {19}g\nProtein {3}g\n\nVitamin A (IU): {17}\nVitamin C {9}mg\nVitamin B6 {18}mg\nVitamin B12 {10}mcg\nZinc {12}mg\nIron {13}mg\nCalcium {16}mg", dish.nutrition[0], dish.nutrition[1], dish.nutrition[2], dish.nutrition[3], dish.nutrition[4], dish.nutrition[5], dish.nutrition[6], dish.nutrition[7], dish.nutrition[8], dish.nutrition[9], dish.nutrition[10], dish.nutrition[11], dish.nutrition[12], dish.nutrition[13], dish.nutrition[14], dish.nutrition[15], dish.nutrition[16], dish.nutrition[17], dish.nutrition[18], dish.nutrition[19]);
-                nutrTxt.Text = temp;
+                nutrTxt.Text = "Calories\nSaturated Fat\nTrans Fat\nCholesterol\nSodium\nDietary Fiber\nSugar\nProtein";
+              
+                String temp = System.String.Format("{0}\n{1}g\n{2}g\n{3}mg\n{4}mg\n{5}g\n{6}g\n{7}g",
+                    dish.nutrition[0], dish.nutrition[4], dish.nutrition[14], dish.nutrition[7], dish.nutrition[11], dish.nutrition[8], dish.nutrition[19], dish.nutrition[3]);
+                nutrVals.Text = temp;
+                nutrVals.FontSize = nutrTxt.FontSize = 35;
             }
             else
             {

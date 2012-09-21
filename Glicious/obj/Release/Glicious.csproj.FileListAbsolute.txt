@@ -26,3 +26,5 @@ C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Relea
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Background.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\ApplicationIcon.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.csprojResolveAssemblyReference.cache
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\calendar.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\images\red_textured_background.png

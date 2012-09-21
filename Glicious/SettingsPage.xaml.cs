@@ -24,26 +24,13 @@ namespace Glicious
             (App.Current as App).inverted = IsLightTheme;
             if ((App.Current as App).inverted)
             {
-                LayoutRoot.Background = new SolidColorBrush(Colors.White);
+                gradStart.Color = Colors.White;
+                gradStop.Color = Colors.Black;
                 Glicious.Foreground = new SolidColorBrush(Colors.Black);
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
                 textBlock1.Foreground = new SolidColorBrush(Colors.Black);
-                veganBox.Foreground = new SolidColorBrush(Colors.Black);
-                ovolactoBox.Foreground = new SolidColorBrush(Colors.Black);
-                gfBox.Foreground = new SolidColorBrush(Colors.Black);
-                passoverBox.Foreground = new SolidColorBrush(Colors.Black);
             }
-            else
-            {
-                LayoutRoot.Background = new SolidColorBrush(Colors.Black);
-                Glicious.Foreground = new SolidColorBrush(Colors.White);
-                PgTitle.Foreground = new SolidColorBrush(Colors.White);
-                textBlock1.Foreground = new SolidColorBrush(Colors.White);
-                veganBox.Foreground = new SolidColorBrush(Colors.White);
-                ovolactoBox.Foreground = new SolidColorBrush(Colors.White);
-                gfBox.Foreground = new SolidColorBrush(Colors.White);
-                passoverBox.Foreground = new SolidColorBrush(Colors.White);
-            }
+
             ApplicationBar = new ApplicationBar();
             ApplicationBarIconButton save = new ApplicationBarIconButton();
             save.IconUri = new Uri("/Images/save.png", UriKind.Relative);

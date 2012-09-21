@@ -8,7 +8,6 @@ C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\Microsoft.Phone.Controls.Toolkit.pdb
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\Microsoft.Phone.Controls.Toolkit.xml
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\Microsoft.Phone.Controls.xml
-C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Debug\App.g.i.cs
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Debug\MainPage.g.i.cs
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Debug\VenuesPage.g.i.cs
@@ -24,3 +23,8 @@ C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\Newtonsoft.Json.xml
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\images\change.png
 C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Debug\NutritionPage.g.i.cs
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\Background.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\ApplicationIcon.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\images\calendar.png
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Debug\Glicious.csprojResolveAssemblyReference.cache
+C:\Users\Colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Debug\images\red_textured_background.png

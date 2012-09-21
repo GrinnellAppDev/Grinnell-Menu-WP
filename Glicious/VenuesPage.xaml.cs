@@ -22,33 +22,21 @@ namespace Glicious
     {
         IsolatedStorageSettings appsettings = IsolatedStorageSettings.ApplicationSettings;
         public Menu menu;
-        private DatePicker dPicker;
+        private DatePicker dPicker; 
         Popup mealChange = new Popup();
        
         public VenuesPage()
         {
             InitializeComponent();
-
             (App.Current as App).inverted = IsLightTheme;
             if ((App.Current as App).inverted)
             {
-                LayoutRoot.Background = new SolidColorBrush(Colors.White);
-                textBlock1.Foreground = new SolidColorBrush(Colors.Black);
+                gradStart.Color = Colors.White;
+                gradStop.Color = Colors.Black;
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
                 meal.Foreground = new SolidColorBrush(Colors.Black);
                 date.Foreground = new SolidColorBrush(Colors.Black);
-                listBox.Foreground = new SolidColorBrush(Colors.Black);
             }
-            else
-            {
-                LayoutRoot.Background = new SolidColorBrush(Colors.Black);
-                textBlock1.Foreground = new SolidColorBrush(Colors.White);
-                PgTitle.Foreground = new SolidColorBrush(Colors.White);
-                meal.Foreground = new SolidColorBrush(Colors.White);
-                date.Foreground = new SolidColorBrush(Colors.White);
-                listBox.Foreground = new SolidColorBrush(Colors.White);
-            }
-
 
             mealChange.IsOpen = false;
             textBlock1.Visibility = Visibility.Visible;
@@ -60,12 +48,38 @@ namespace Glicious
             settings.Click += new EventHandler(settings_Click);
             ApplicationBarIconButton changeMeal = new ApplicationBarIconButton();
             changeMeal.IconUri = new Uri("/Images/change.png", UriKind.Relative);
-            changeMeal.Text = "Change";
+            changeMeal.Text = "Meal";
             changeMeal.Click += new EventHandler(changeMeal_Click);
+            ApplicationBarIconButton pickDate = new ApplicationBarIconButton();
+            pickDate.IconUri = new Uri("/Images/calendar.png", UriKind.Relative);
+            pickDate.Text = "Date";
+            pickDate.Click += new EventHandler(pickDate_Click);
+            ApplicationBar.Buttons.Add(pickDate);
             ApplicationBar.Buttons.Add(changeMeal);
             ApplicationBar.Buttons.Add(settings);
+            
+            if ((App.Current as App).datePick == null)
+            {
+                datePicker.Value = DateTime.Now;
+                if (DateTime.Now.Hour < 10)
+                    (App.Current as App).mealString = "Breakfast";
+                else if (DateTime.Now.Hour < 1 || (DateTime.Now.Hour < 2 && DateTime.Now.Minute < 30))
+                    (App.Current as App).mealString = "Lunch";
+                else if (DateTime.Now.Hour < 19)
+                    (App.Current as App).mealString = "Dinner";
+                else if (DateTime.Now.Hour < 20 && DateTime.Now.DayOfWeek != DayOfWeek.Friday 
+                    && DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
+                    (App.Current as App).mealString = "Dinner";
+                else
+                {
+                    (App.Current as App).mealString = "Breakfast";
+                    datePicker.Value = DateTime.Now.AddDays(1);
+                }
+                dPicker = datePicker;
+            }
+            else 
+                dPicker = (App.Current as App).datePick;
 
-            dPicker = (App.Current as App).datePick;
             dPicker.ValueStringFormat = "{0:D}";
             date.Text = dPicker.ValueString;
             meal.Text = (App.Current as App).mealString;
@@ -95,12 +109,12 @@ namespace Glicious
                 Type type2 = dummy.GetType();
                 if (type.FullName.Equals(type2.FullName)) 
                 {
-                    //Menu.Venue.Dish dummy2 = (Menu.Venue.Dish)listBox.SelectedItem;
-                    //if (dummy2.hasNutrition)
-                    //{
-                    (App.Current as App).nutrDish = (Menu.Venue.Dish)listBox.SelectedItem;
-                    NavigationService.Navigate(new Uri("/NutritionPage.xaml", UriKind.Relative));
-                    //}
+                    Menu.Venue.Dish dummy2 = (Menu.Venue.Dish)listBox.SelectedItem;
+                    if (dummy2.hasNutrition)
+                    {
+                        (App.Current as App).nutrDish = (Menu.Venue.Dish)listBox.SelectedItem;
+                        NavigationService.Navigate(new Uri("/NutritionPage.xaml", UriKind.Relative));
+                    }
                 }
                 listBox.SelectedIndex = -1;
             }
@@ -373,6 +387,11 @@ namespace Glicious
             popupEnd(); 
         }
 
+        void pickDate_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
         void changeMeal_Click(object sender, EventArgs e)
         {
             Border border = new Border();
@@ -380,10 +399,7 @@ namespace Glicious
             border.BorderThickness = new Thickness(2.0);
 
             StackPanel panel1 = new StackPanel();
-            if ((App.Current as App).inverted)
-                panel1.Background = new SolidColorBrush(Colors.LightGray);
-            else
-                panel1.Background = new SolidColorBrush(Colors.Gray);
+            panel1.Background = new SolidColorBrush(Colors.Gray);
             Button cancel = new Button();
             cancel.Content = "Cancel";
             cancel.Margin = new Thickness(0);

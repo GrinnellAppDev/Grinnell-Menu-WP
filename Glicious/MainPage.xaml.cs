@@ -24,46 +24,15 @@ namespace Glicious
             (App.Current as App).inverted = IsLightTheme;
             if ((App.Current as App).inverted)
             {
-                LayoutRoot.Background = new SolidColorBrush(Colors.White);
-                textBlock1.Foreground = new SolidColorBrush(Colors.Black);
+                gradStart.Color = Colors.White;
+                gradStop.Color = Colors.Black;
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
-                datePicker.Foreground = new SolidColorBrush(Colors.White);
-                datePicker.Background = new SolidColorBrush(Colors.Black);
             }
-            else
-            {
-                LayoutRoot.Background = new SolidColorBrush(Colors.Black);
-                textBlock1.Foreground = new SolidColorBrush(Colors.White);
-                PgTitle.Foreground = new SolidColorBrush(Colors.White);
-                datePicker.Foreground = new SolidColorBrush(Colors.Black);
-                datePicker.Background = new SolidColorBrush(Colors.White);
-            }
-           
+            
             hideAllButtons();
             textBlock1.Text = "Loading menus, please wait.";
 
-            changeColors(bfastButton);
-            changeColors(lunchButton);
-            changeColors(dinnerButton);
-            changeColors(outtakesButton);
-
             this.datePicker.ValueChanged += new EventHandler<DateTimeValueChangedEventArgs>(picker_ValueChanged);
-        }
-
-        private void changeColors(Button b)
-        {
-            if ((App.Current as App).inverted)
-            {
-                b.BorderBrush = new SolidColorBrush(Colors.Black);
-                b.Background = new SolidColorBrush(Colors.White);
-                b.Foreground = new SolidColorBrush(Colors.Black);
-            }
-            else
-            {
-                b.BorderBrush = new SolidColorBrush(Colors.White);
-                b.Background = new SolidColorBrush(Colors.Black);
-                b.Foreground = new SolidColorBrush(Colors.White);
-            }
         }
 
         public bool IsLightTheme
