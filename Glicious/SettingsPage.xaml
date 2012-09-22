@@ -35,8 +35,8 @@
         <Grid x:Name="ContentPanel" Grid.Row="1">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF910000" Offset="0" />
-                    <GradientStop Color="Red" Offset="1" />
+                    <GradientStop Color="#FF910000" Offset="0" x:Name="grad2start" />
+                    <GradientStop Color="Red" Offset="1" x:Name="grad2stop" />
                 </LinearGradientBrush>
             </Grid.Background>
             <CheckBox Content="Vegan" FlowDirection="LeftToRight" FontSize="40" Height="92" HorizontalAlignment="Center" Margin="0,0,0,0" Name="veganBox" VerticalAlignment="Top" Width="275" BorderBrush="Black" Background="White" Foreground="White" />

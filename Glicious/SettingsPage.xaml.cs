@@ -25,7 +25,9 @@ namespace Glicious
             if ((App.Current as App).inverted)
             {
                 gradStart.Color = Colors.White;
-                gradStop.Color = Colors.Black;
+                gradStop.Color = Colors.Black; 
+                grad2start.Color = Colors.Black;
+                grad2stop.Color = Colors.DarkGray;
                 Glicious.Foreground = new SolidColorBrush(Colors.Black);
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
                 textBlock1.Foreground = new SolidColorBrush(Colors.Black);

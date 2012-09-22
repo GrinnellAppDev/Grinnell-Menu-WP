@@ -3,7 +3,6 @@ c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Relea
 c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Glicious.pdb
 c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\AppManifest.xaml
 c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\Bin\Release\Glicious.xap
-c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\MainPage.g.i.cs
 c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.g.resources
 c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.dll
 c:\users\colin\documents\visual studio 2010\Projects\Glicious\Glicious\obj\Release\Glicious.pdb

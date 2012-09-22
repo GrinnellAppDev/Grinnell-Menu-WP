@@ -25,6 +25,8 @@ namespace Glicious
             {
                 gradStart.Color = Colors.White;
                 gradStop.Color = Colors.Black;
+                grad2start.Color = Colors.Black;
+                grad2stop.Color = Colors.DarkGray;
                 Glicious.Foreground = new SolidColorBrush(Colors.Black);
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
                 dishName.Foreground = new SolidColorBrush(Colors.Black);

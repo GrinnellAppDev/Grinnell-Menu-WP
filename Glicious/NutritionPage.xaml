@@ -30,8 +30,8 @@
         <Grid x:Name="ContentPanel" Grid.Row="1">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF910000" Offset="0" />
-                    <GradientStop Color="Red" Offset="1" />
+                    <GradientStop Color="#FF910000" Offset="0" x:Name="grad2start" />
+                    <GradientStop Color="Red" Offset="1" x:Name="grad2stop" />
                 </LinearGradientBrush>
             </Grid.Background>
             <TextBlock Height="415" HorizontalAlignment="Left" Margin="20,25,0,0" Name="nutrTxt" Text="" VerticalAlignment="Top" Width="428" Foreground="White" />
@@ -46,17 +46,4 @@
             </LinearGradientBrush>
         </Grid.Background>
     </Grid>
- 
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
-
 </phone:PhoneApplicationPage>

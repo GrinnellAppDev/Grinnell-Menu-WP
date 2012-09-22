@@ -17,8 +17,6 @@ namespace Glicious
 {
     public partial class App : Application
     {
-        public string mealString { get; set; }
-        public DatePicker datePick { get; set; }
         public Menu.Venue.Dish nutrDish { get; set; }
         public bool veganFilter { get; set; }
         public bool ovoFilter { get; set; }

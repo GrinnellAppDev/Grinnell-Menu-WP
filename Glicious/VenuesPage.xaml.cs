@@ -22,8 +22,8 @@ namespace Glicious
     {
         IsolatedStorageSettings appsettings = IsolatedStorageSettings.ApplicationSettings;
         public Menu menu;
-        private DatePicker dPicker;
-       
+        private bool datepickerBool, firstTime, settingsBool;
+
         public VenuesPage()
         {
             InitializeComponent();
@@ -32,52 +32,88 @@ namespace Glicious
             {
                 gradStart.Color = Colors.White;
                 gradStop.Color = Colors.Black;
+                grad2start.Color = Colors.Black;
+                grad2stop.Color = Colors.DarkGray;
                 PgTitle.Foreground = new SolidColorBrush(Colors.Black);
                 meal.Foreground = new SolidColorBrush(Colors.Black);
                 date.Foreground = new SolidColorBrush(Colors.Black);
+                datePicker.Foreground = new SolidColorBrush(Colors.Black);
+                datePicker.Background = new SolidColorBrush(Colors.White);
+                border1.BorderBrush = new SolidColorBrush(Colors.White);
             }
             ApplicationBar = new ApplicationBar();
             ApplicationBarIconButton settings = new ApplicationBarIconButton();
             settings.IconUri = new Uri("/Images/appbar.feature.settings.rest.png", UriKind.Relative);
             settings.Text = "Settings";
-            settings.Click += new EventHandler(settings_Click);
-            ApplicationBarIconButton pickDate = new ApplicationBarIconButton();
-            pickDate.IconUri = new Uri("/Images/calendar.png", UriKind.Relative);
-            pickDate.Text = "Date";
-            pickDate.Click += new EventHandler(pickDate_Click);
-            ApplicationBar.Buttons.Add(pickDate);
+            settings.Click += new EventHandler(settings_Click);    
             ApplicationBar.Buttons.Add(settings);
 
+            datePicker.Value = DateTime.Now;
+            datePicker.ValueStringFormat = "{0:D}";
+            if (DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
+            {
+                ApplicationBarMenuItem bfastBar = new ApplicationBarMenuItem("Breakfast");
+                bfastBar.Click += new EventHandler(bFast_Click);
+                ApplicationBar.MenuItems.Add(bfastBar);
+            }
+            ApplicationBarMenuItem lunchBar = new ApplicationBarMenuItem("Lunch");
+            ApplicationBarMenuItem dinnerBar = new ApplicationBarMenuItem("Dinner");
+            lunchBar.Click += new EventHandler(lunch_Click);
+            dinnerBar.Click += new EventHandler(dinner_Click);
+            ApplicationBar.MenuItems.Add(lunchBar);
+            ApplicationBar.MenuItems.Add(dinnerBar);
+            if (DateTime.Now.DayOfWeek != DayOfWeek.Sunday && DateTime.Now.DayOfWeek != DayOfWeek.Saturday)
+            {
+                ApplicationBarMenuItem outtakesBar = new ApplicationBarMenuItem("Outtakes");
+                outtakesBar.Click += new EventHandler(outtakes_Click);
+                ApplicationBar.MenuItems.Add(outtakesBar);
+            }
+
+            if (appsettings.Contains("vegan"))
+            {
+                (App.Current as App).ovoFilter = (bool)appsettings["ovolacto"];
+                (App.Current as App).veganFilter = (bool)appsettings["vegan"];
+                (App.Current as App).passoverFilter = (bool)appsettings["passover"];
+                (App.Current as App).gfFilter = (bool)appsettings["gf"];
+            }
+            this.datePicker.ValueChanged += new EventHandler<DateTimeValueChangedEventArgs>(picker_ValueChanged);
+            firstTime = datepickerBool = true;
+            settingsBool = false;
+        }
+
+        public bool IsLightTheme
+        {
+            get
+            {
+                return (Visibility)Resources["PhoneLightThemeVisibility"] == Visibility.Visible;
+            }
+        }
+
+        private void OnNavigatedTo()
+        {
+            datepickerBool = true;
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (firstTime || (!datepickerBool && settingsBool))
+            {
+                listBox.Items.Clear();
+                textBlock1.Visibility = Visibility.Visible;
+                textBlock1.Text = "Loading menu, please wait.";
+                settingsBool = false;
+                loadDataPrecursor();
+            }
+        }
+
+        //Check if the selected date is valid, etc.
+        void loadDataPrecursor()
+        {
+            listBox.Items.Clear();
             textBlock1.Visibility = Visibility.Visible;
             textBlock1.Text = "Loading menu, please wait.";
-
-            if ((App.Current as App).datePick == null)
-            {
-                datePicker.Value = DateTime.Now;
-                if (DateTime.Now.Hour < 10)
-                    (App.Current as App).mealString = "Breakfast";
-                else if (DateTime.Now.Hour < 1 || (DateTime.Now.Hour < 2 && DateTime.Now.Minute < 30))
-                    (App.Current as App).mealString = "Lunch";
-                else if (DateTime.Now.Hour < 19)
-                    (App.Current as App).mealString = "Dinner";
-                else if (DateTime.Now.Hour < 20 && DateTime.Now.DayOfWeek != DayOfWeek.Friday 
-                    && DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
-                    (App.Current as App).mealString = "Dinner";
-                else
-                {
-                    (App.Current as App).mealString = "Breakfast";
-                    datePicker.Value = DateTime.Now.AddDays(1);
-                }
-                dPicker = datePicker;
-            }
-            else 
-                dPicker = (App.Current as App).datePick;
-
-            dPicker.ValueStringFormat = "{0:D}";
-            date.Text = dPicker.ValueString;
-            meal.Text = (App.Current as App).mealString;
-            
-            DateTime dTime = (DateTime)dPicker.Value;
+            ApplicationBar.MenuItems.Clear();
+            DateTime dTime = (DateTime)datePicker.Value;
             if (dTime.DayOfWeek != DayOfWeek.Sunday)
             {
                 ApplicationBarMenuItem bfastBar = new ApplicationBarMenuItem("Breakfast");
@@ -96,78 +132,126 @@ namespace Glicious
                 outtakesBar.Click += new EventHandler(outtakes_Click);
                 ApplicationBar.MenuItems.Add(outtakesBar);
             }
-
-            if (appsettings.Contains("vegan"))
+            try
             {
-                (App.Current as App).ovoFilter = (bool)appsettings["ovolacto"];
-                (App.Current as App).veganFilter = (bool)appsettings["vegan"];
-                (App.Current as App).passoverFilter = (bool)appsettings["passover"];
-                (App.Current as App).gfFilter = (bool)appsettings["gf"];
+                var webClient = new WebClient();
+                webClient.OpenReadAsync(new Uri("http://tcdb.grinnell.edu/apps/glicious/last_date.json"));
+                webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(precursorCompleted);
+            }
+            catch (Exception except)
+            {
+                datePicker.Value = DateTime.Today;
+                textBlock1.Text = "No menus are currently available.\nPlease check your network connection.";
+                Console.WriteLine("Web exception: {0}", except);
             }
         }
 
-        public bool IsLightTheme
+        void precursorCompleted(object sender, OpenReadCompletedEventArgs e)
         {
-            get
+            try
             {
-                return (Visibility)Resources["PhoneLightThemeVisibility"]
-                    == Visibility.Visible;
-            }
-        }
-
-        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // ignore scenarios when we navigate back to this page and clear what was previously selected
-            if (listBox.SelectedItem != null)
-            {
-                Menu.Venue.Dish dummy = new Menu.Venue.Dish("", false, false, false, false, false, false);
-                Type type = listBox.SelectedItem.GetType();
-                Type type2 = dummy.GetType();
-                if (type.FullName.Equals(type2.FullName)) 
+                using (var reader = new StreamReader(e.Result))
                 {
-                    Menu.Venue.Dish dummy2 = (Menu.Venue.Dish)listBox.SelectedItem;
-                    if (dummy2.hasNutrition)
+                    String lastDateStr = reader.ReadToEnd();
+                    lastDateStr = lastDateStr.Replace("{\"Last_Day\":\"", "");
+                    lastDateStr = lastDateStr.Replace("\"}", "");
+                    lastDateStr = lastDateStr.Replace("-", "/");
+                    DateTime lastDate = DateTime.Parse(lastDateStr);
+                    DateTime selectedTime = (DateTime)datePicker.Value;
+
+                    if (DateTime.Compare(DateTime.Today, lastDate) > 0)
                     {
-                        (App.Current as App).nutrDish = (Menu.Venue.Dish)listBox.SelectedItem;
-                        NavigationService.Navigate(new Uri("/NutritionPage.xaml", UriKind.Relative));
+                        datePicker.Value = DateTime.Today;
+                        textBlock1.Text = "No menus are currently available.";
+                        textBlock1.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        String s;
+                        if (DateTime.Compare(selectedTime, lastDate) > 0)
+                        {
+                            s = System.String.Format("No menus are available for the selected date.\n{0} is the \nlast date available.", lastDate.ToLongDateString());
+                            textBlock1.Text = s;
+                            textBlock1.Visibility = Visibility.Visible;
+                        }
+                        else if (DateTime.Compare(selectedTime, DateTime.Today) < 0)
+                        {
+                            datePicker.Value = DateTime.Today;
+                            if (datepickerBool)
+                                if (DateTime.Today.DayOfWeek == DayOfWeek.Sunday)
+                                    meal.Text = "Lunch";
+                                else
+                                    meal.Text = "Breakfast";
+                            datepickerBool = true;
+                            textBlock1.Visibility = Visibility.Collapsed;
+                            loadData();
+                        }
+                        else
+                        {
+                            if (firstTime)
+                            {
+                                firstTime = false;
+                                if (DateTime.Now.Hour < 10 && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
+                                    meal.Text = "Breakfast";
+                                else if (DateTime.Now.Hour < 1 || (DateTime.Now.Hour < 2 && DateTime.Now.Minute < 30))
+                                    meal.Text = "Lunch";
+                                else if (DateTime.Now.Hour < 19)
+                                    meal.Text = "Dinner";
+                                else if (DateTime.Now.Hour < 20 && DateTime.Now.DayOfWeek != DayOfWeek.Friday
+                                    && DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
+                                    meal.Text = "Dinner";
+                                else
+                                {
+                                    meal.Text = "Breakfast";
+                                    datePicker.Value = DateTime.Now.AddDays(1);
+                                }
+                            }
+                            else if (datepickerBool)
+                                if (selectedTime.DayOfWeek == DayOfWeek.Sunday)
+                                    meal.Text = "Lunch";
+                                else
+                                    meal.Text = "Breakfast";
+                            datepickerBool = true;
+                            textBlock1.Visibility = Visibility.Collapsed;
+                            loadData();
+                        }
                     }
                 }
-                listBox.SelectedIndex = -1;
+                datepickerBool = true;
+            }
+            catch (Exception except)
+            {
+                datepickerBool = true;
+                datePicker.Value = DateTime.Today;
+                textBlock1.Text = "No menus are currently available.\nPlease check your network connection.";
+                textBlock1.Visibility = Visibility.Visible;
+                Console.WriteLine("Parsing exception: {0}", except);
             }
         }
 
-        private void OnNavigatedTo()
-        {
-            loadData();
-        }
-
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            loadData();
-        }
-
+        //Get the data from the json into the listbox
         private void loadData()
         {
             try
             {
                 listBox.Items.Clear();
-                DateTime dTime = (DateTime)dPicker.Value;
+                DateTime dTime = (DateTime)datePicker.Value;
                 var webClient = new WebClient();
                 String urlString = System.String.Format("http://tcdb.grinnell.edu/apps/glicious/{0}-{1}-{2}.json", dTime.Month, dTime.Day, dTime.Year);
                 //String urlString = System.String.Format("http://www.cs.grinnell.edu/~tremblay/menu/{0}-{1}-{2}.json", dTime.Month, dTime.Day, dTime.Year);
                 // System.Diagnostics.Debug.WriteLine(urlString);
                 webClient.OpenReadAsync(new Uri(urlString));
-                webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_OpenReadCompleted);
+                webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(loadCompleted);
             }
             catch (Exception except)
             {
                 textBlock1.Visibility = Visibility.Collapsed;
-                listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal", null));
+                listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal.\n An error occurred.", null));
                 Console.WriteLine("Web exception: {0}", except);
             }
         }
 
-        void webClient_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
+        void loadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
             try
             {
@@ -177,7 +261,7 @@ namespace Glicious
                     JObject o = JObject.Parse(json);
                     Menu.Venue[] tempVens = new Menu.Venue[30];
                     int i = 0;
-                    
+
                     String pass = (String)o["PASSOVER"];
                     if (pass.Equals("true"))
                         (App.Current as App).passover = true;
@@ -252,28 +336,30 @@ namespace Glicious
                             tempVens[i++] = new Menu.Venue(venName, tempDishes);
                         }
                     else
-                        listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal", null));
+                    {
+                        listBox.Items.Add(new Menu.Venue("No menu available \nfor selected meal.", null));
+                        return;
+                    }
                     menu = new Menu(tempVens);
                 }
-                textBlock1.Visibility = Visibility.Collapsed;
-                
-            bool pFlag, oFlag, vFlag, gfFlag, compositeBool;
-            if ((App.Current as App).passover && (App.Current as App).passoverFilter)
-                pFlag = true;
-            else
-                pFlag = false;
-            if ((App.Current as App).ovoFilter)
-                oFlag = true;
-            else
-                oFlag = false;
-            if ((App.Current as App).veganFilter)
-                vFlag = true;
-            else
-                vFlag = false;
-            if ((App.Current as App).gfFilter)
-                gfFlag = true;
-            else
-                gfFlag = false;
+
+                bool pFlag, oFlag, vFlag, gfFlag, compositeBool;
+                if ((App.Current as App).passover && (App.Current as App).passoverFilter)
+                    pFlag = true;
+                else
+                    pFlag = false;
+                if ((App.Current as App).ovoFilter)
+                    oFlag = true;
+                else
+                    oFlag = false;
+                if ((App.Current as App).veganFilter)
+                    vFlag = true;
+                else
+                    vFlag = false;
+                if ((App.Current as App).gfFilter)
+                    gfFlag = true;
+                else
+                    gfFlag = false;
 
                 foreach (Menu.Venue ven in menu.venues)
                     if (ven != null)
@@ -323,6 +409,7 @@ namespace Glicious
                         else
                             listBox.Items.Add(new Menu.Venue("\t", null));
                     }
+                textBlock1.Visibility = Visibility.Collapsed;
             }
             catch (Exception except)
             {
@@ -334,52 +421,76 @@ namespace Glicious
 
         void settings_Click(object sender, EventArgs e)
         {
-             NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+            datepickerBool = false;
+            settingsBool = true;
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
         }
 
         void bFast_Click(object sender, EventArgs e)
         {
-            if (!(App.Current as App).mealString.Equals("Breakfast"))
+            if (!meal.Text.Equals("Breakfast"))
             {
                 meal.Text = "Breakfast";
-                (App.Current as App).mealString = "Breakfast"; 
-                loadData();
+                datepickerBool = false;
+                loadDataPrecursor();
             }
         }
 
         void lunch_Click(object sender, EventArgs e)
         {
-            if (!(App.Current as App).mealString.Equals("Lunch"))
+            if (!meal.Text.Equals("Lunch"))
             {
                 meal.Text = "Lunch";
-                (App.Current as App).mealString = "Lunch"; 
-                loadData();
+                datepickerBool = false;
+                loadDataPrecursor();
             }
         }
 
         void dinner_Click(object sender, EventArgs e)
         {
-            if (!(App.Current as App).mealString.Equals("Dinner"))
+            if (!meal.Text.Equals("Dinner"))
             {
                 meal.Text = "Dinner";
-                (App.Current as App).mealString = "Dinner"; 
-                loadData();
+                datepickerBool = false;
+                loadDataPrecursor();
             }
         }
 
         void outtakes_Click(object sender, EventArgs e)
         {
-            if (!(App.Current as App).mealString.Equals("Outtakes"))
+            if (!meal.Text.Equals("Outtakes"))
             {
                 meal.Text = "Outtakes";
-                (App.Current as App).mealString = "Outtakes";
-                loadData();
+                datepickerBool = false;
+                loadDataPrecursor();
             }
         }
 
-        void pickDate_Click(object sender, EventArgs e)
+        private void picker_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            loadDataPrecursor();
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // ignore scenarios when we navigate back to this page and clear what was previously selected
+            if (listBox.SelectedItem != null)
+            {
+                Menu.Venue.Dish dummy = new Menu.Venue.Dish("", false, false, false, false, false, false);
+                Type type = listBox.SelectedItem.GetType();
+                Type type2 = dummy.GetType();
+                if (type.FullName.Equals(type2.FullName))
+                {
+                    Menu.Venue.Dish dummy2 = (Menu.Venue.Dish)listBox.SelectedItem;
+                    if (dummy2.hasNutrition)
+                    {
+                        (App.Current as App).nutrDish = (Menu.Venue.Dish)listBox.SelectedItem;
+                        datepickerBool = false;
+                        NavigationService.Navigate(new Uri("/NutritionPage.xaml", UriKind.Relative));
+                    }
+                }
+                listBox.SelectedIndex = -1;
+            }
         }
     }
 }
