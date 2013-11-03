@@ -1,9 +1,15 @@
-G-licious
+
+
+G-licious iOS
 ==============
 
-Author: Colin Tremblay
+Authors:  * Maijid Moujaled 
+          * Colin Tremblay
+          * David Cowden
+          * Dugan Knoll
+          * Aaltan Ahmad 
 
-Date:   Saturday, 2nd November, 2013
+Date:    Friday, 12th April, 2013
 
 ---
 
